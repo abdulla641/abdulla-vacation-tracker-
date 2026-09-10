@@ -1,1 +1,128 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Kerala Vacation Tracker 2026</title><link rel="stylesheet" href="style.css?v=1"></head><body><div class="app"><header><h1>🌴 Kerala Vacation 2026</h1><p>17 September → 20 October 2026</p><p id="tripDay"></p></header><main><section id="home" class="tab active"><div class="dashboard"><div class="box">💰 Available<h2 id="moneyAvailable">₹0</h2></div><div class="box">💸 Spent<h2 id="totalSpent">₹0</h2></div><div class="box">💳 Remaining<h2 id="remainingMoney">₹0</h2></div><div class="box">📜 Transactions<h2 id="transactionCount">0</h2></div></div></section><section id="add" class="tab"><div class="card"><h2>Add Money</h2><input id="moneyAmount" type="number" placeholder="Amount ₹"><input id="moneyNote" placeholder="Note"><button onclick="addMoney()">Add Money</button></div><div class="card"><h2>Add Expense</h2><input id="amount" type="number" placeholder="Amount ₹"><input id="note" placeholder="Description"><button onclick="addExpense()">Add Expense</button></div></section><section id="historyTab" class="tab"><div class="card"><h2>📜 History</h2><div id="history"></div></div></section><section id="reports" class="tab"><div class="card"><h2>📊 Reports</h2></div></section><section id="settings" class="tab"><div class="card"><h2>⚙️ Settings</h2><button onclick="exportData()">Backup</button></div></section></main><nav class="bottom-nav"><button onclick="showTab('home')">🏠<br>Home</button><button onclick="showTab('add')">➕<br>Add</button><button onclick="showTab('historyTab')">📜<br>History</button><button onclick="showTab('reports')">📊<br>Reports</button><button onclick="showTab('settings')">⚙️<br>Settings</button></nav></div><script>function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}</script><script src="app.js?v=1"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a9f4d">
+  <title>Kerala Vacation Tracker 2026</title>
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="eyebrow">ABDULLA • 2026</div>
+    <h1>🌴 Kerala Vacation</h1>
+    <p>17 September → 20 October 2026</p>
+    <p id="tripDay" class="trip-day"></p>
+  </header>
+
+  <main>
+    <section id="home" class="tab active">
+      <div class="dashboard">
+        <div class="box"><span>💰 Available</span><h2 id="moneyAvailable">₹0</h2></div>
+        <div class="box"><span>💸 Spent</span><h2 id="totalSpent">₹0</h2></div>
+        <div class="box"><span>💳 Remaining</span><h2 id="remainingMoney">₹0</h2></div>
+        <div class="box"><span>📜 Transactions</span><h2 id="transactionCount">0</h2></div>
+      </div>
+      <div class="card">
+        <h2>💍 Marriage Planning</h2>
+        <div class="status-line"><span id="marriageStatusBadge" class="badge planning">Proposal Stage</span><span id="marriageBudgetSummary">₹0 / ₹3,00,000</span></div>
+        <div class="progress"><div id="marriageMiniProgress" class="progress-bar"></div></div>
+        <p class="muted">Kept completely separate from vacation spending.</p>
+        <button class="secondary" onclick="showTab('marriage')">Open Marriage Planner</button>
+      </div>
+    </section>
+
+    <section id="add" class="tab">
+      <div class="card"><h2>Add Vacation Money</h2><input id="moneyAmount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="moneyNote" placeholder="Note"><button onclick="addMoney()">Add Money</button></div>
+      <div class="card"><h2>Add Vacation Expense</h2><input id="amount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="note" placeholder="Description"><button onclick="addExpense()">Add Expense</button></div>
+    </section>
+
+    <section id="historyTab" class="tab"><div class="card"><h2>📜 Vacation History</h2><div id="history" class="history"></div></div></section>
+
+    <section id="marriage" class="tab">
+      <div class="section-title"><div><div class="eyebrow dark">SEPARATE LEDGER</div><h2>💍 Marriage Planning</h2></div><span id="marriageStatusBadge2" class="badge planning">Proposal Stage</span></div>
+      <div id="proposalNotice" class="notice">Nothing is confirmed yet. Planning mode lets you prepare without treating possible costs as committed spending.</div>
+
+      <div class="dashboard marriage-dashboard">
+        <div class="box"><span>🎯 Budget Ceiling</span><h2 id="marriageBudget">₹3,00,000</h2></div>
+        <div class="box"><span>💸 Actual Spent</span><h2 id="marriageSpent">₹0</h2></div>
+        <div class="box"><span>💵 Funded</span><h2 id="marriageFunded">₹0</h2></div>
+        <div class="box"><span>🤝 Borrowed</span><h2 id="marriageBorrowed">₹0</h2></div>
+      </div>
+
+      <div class="card">
+        <div class="status-line"><strong>Budget used</strong><strong id="marriagePercent">0%</strong></div>
+        <div class="progress large"><div id="marriageProgress" class="progress-bar"></div></div>
+        <div class="status-line small"><span>Remaining within ceiling</span><strong id="marriageRemaining">₹3,00,000</strong></div>
+      </div>
+
+      <div class="card">
+        <h3>Plan Settings</h3>
+        <label>Stage</label>
+        <select id="marriageStage" onchange="setMarriageStage(this.value)">
+          <option value="proposal">Proposal Stage</option>
+          <option value="confirmed">Marriage Confirmed</option>
+        </select>
+        <label>Maximum all-in budget</label>
+        <input id="marriageBudgetInput" type="number" inputmode="decimal" value="300000">
+        <button onclick="saveMarriageBudget()">Save Budget</button>
+      </div>
+
+      <div class="card">
+        <h3>Add Marriage Expense</h3>
+        <div class="two-col">
+          <select id="marriageCategory">
+            <option>Gold</option><option>Clothes</option><option>Nikah / Function</option><option>Documents</option><option>Travel</option><option>Gifts</option><option>Home Setup</option><option>Other</option>
+          </select>
+          <input id="marriageExpenseAmount" type="number" inputmode="decimal" placeholder="Amount ₹">
+        </div>
+        <input id="marriageExpenseNote" placeholder="Description / note">
+        <input id="marriageExpenseDate" type="date">
+        <button onclick="addMarriageExpense()">Add Expense</button>
+      </div>
+
+      <div class="card">
+        <h3>Add Funding / Borrowing</h3>
+        <select id="fundingType"><option value="cash">Own Cash / Savings</option><option value="borrowed">Borrowed Money</option><option value="family">Family Contribution</option><option value="other">Other Funding</option></select>
+        <input id="fundingAmount" type="number" inputmode="decimal" placeholder="Amount ₹">
+        <input id="fundingSource" placeholder="Source / person / account">
+        <input id="fundingNote" placeholder="Optional note or repayment terms">
+        <button onclick="addMarriageFunding()">Add Funding</button>
+      </div>
+
+      <div class="card">
+        <h3>Category Breakdown</h3>
+        <div id="marriageCategories" class="breakdown"></div>
+      </div>
+
+      <div class="card">
+        <h3>Marriage Ledger</h3>
+        <div class="filter-row"><button class="chip active" onclick="setMarriageFilter('all',this)">All</button><button class="chip" onclick="setMarriageFilter('expense',this)">Expenses</button><button class="chip" onclick="setMarriageFilter('funding',this)">Funding</button></div>
+        <div id="marriageHistory" class="history"></div>
+      </div>
+    </section>
+
+    <section id="reports" class="tab">
+      <div class="card"><h2>📊 Vacation Reports</h2><div id="vacationReport"></div></div>
+      <div class="card"><h2>💍 Marriage Snapshot</h2><div id="marriageReport"></div></div>
+    </section>
+
+    <section id="settings" class="tab">
+      <div class="card"><h2>⚙️ Settings & Backup</h2><p class="muted">Backup includes vacation and marriage-planning data.</p><button onclick="exportData()">Download Backup</button></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button onclick="showTab('home')">🏠<br>Home</button>
+    <button onclick="showTab('add')">➕<br>Add</button>
+    <button onclick="showTab('historyTab')">📜<br>History</button>
+    <button onclick="showTab('marriage')">💍<br>Marriage</button>
+    <button onclick="showTab('reports')">📊<br>Reports</button>
+    <button onclick="showTab('settings')">⚙️<br>Settings</button>
+  </nav>
+</div>
+<script>function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}</script>
+<script src="app.js?v=2"></script>
+</body>
+</html>
