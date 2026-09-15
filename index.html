@@ -11,17 +11,9 @@
 <div class="app">
   <header class="hero">
     <div class="eyebrow">ABDULLA • KERALA 2026</div>
-    <div class="hero-row">
-      <div>
-        <h1>🌴 Vacation Tracker</h1>
-        <p>17 September → 20 October 2026</p>
-      </div>
-      <div class="hero-badge" id="tripPhase">Preparing</div>
-    </div>
-    <p id="tripDay" class="trip-day"></p>
-    <div class="trip-progress"><div id="tripProgressBar"></div></div>
+    <div class="hero-row"><div><h1>🌴 Vacation Tracker</h1><p>17 September → 20 October 2026</p></div><div class="hero-badge" id="tripPhase">Preparing</div></div>
+    <p id="tripDay" class="trip-day"></p><div class="trip-progress"><div id="tripProgressBar"></div></div>
   </header>
-
   <main>
     <section id="home" class="tab active">
       <div class="dashboard">
@@ -30,71 +22,22 @@
         <div class="box highlight"><span>💳 Remaining</span><h2 id="remainingMoney">₹0</h2><small>Current usable balance</small></div>
         <div class="box"><span>📜 Entries</span><h2 id="transactionCount">0</h2><small>Money + expenses</small></div>
       </div>
-
-      <div class="card quick-card">
-        <div class="card-head"><div><div class="eyebrow dark">QUICK ADD</div><h2>Record something now</h2></div><span>⚡</span></div>
-        <div class="quick-grid">
-          <button class="quick income" onclick="showTab('add');focusField('moneyAmount')">+ Add Money</button>
-          <button class="quick expense" onclick="showTab('add');focusField('amount')">− Add Expense</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><div><div class="eyebrow dark">STATUS</div><h2>Vacation snapshot</h2></div><span id="spendStatus" class="pill good">On track</span></div>
-        <div class="snapshot-row"><span>Average daily spend</span><strong id="avgDailySpend">₹0</strong></div>
-        <div class="snapshot-row"><span>Days completed</span><strong id="daysCompleted">0</strong></div>
-        <div class="snapshot-row"><span>Estimated days left</span><strong id="daysLeft">0</strong></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><div><div class="eyebrow dark">RECENT</div><h2>Latest activity</h2></div><button class="text-btn" onclick="showTab('historyTab')">View all</button></div>
-        <div id="recentHistory" class="history"></div>
-      </div>
+      <div class="card quick-card"><div class="card-head"><div><div class="eyebrow dark">QUICK ADD</div><h2>Record something now</h2></div><span>⚡</span></div><div class="quick-grid"><button class="quick income" onclick="showTab('add');focusField('moneyAmount')">+ Add Money</button><button class="quick expense" onclick="showTab('add');focusField('amount')">− Add Expense</button></div></div>
+      <div class="card"><div class="card-head"><div><div class="eyebrow dark">STATUS</div><h2>Vacation snapshot</h2></div><span id="spendStatus" class="pill good">On track</span></div><div class="snapshot-row"><span>Average daily spend</span><strong id="avgDailySpend">₹0</strong></div><div class="snapshot-row"><span>Days completed</span><strong id="daysCompleted">0</strong></div><div class="snapshot-row"><span>Estimated days left</span><strong id="daysLeft">0</strong></div></div>
+      <div class="card"><div class="card-head"><div><div class="eyebrow dark">RECENT</div><h2>Latest activity</h2></div><button class="text-btn" onclick="showTab('historyTab')">View all</button></div><div id="recentHistory" class="history"></div></div>
     </section>
-
     <section id="add" class="tab">
       <div class="section-title"><div><div class="eyebrow dark">VACATION LEDGER</div><h2>Add Entry</h2></div></div>
       <div class="card"><h3>💰 Add Vacation Money</h3><input id="moneyAmount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="moneyNote" placeholder="Note / source"><button onclick="addMoney()">Add Money</button></div>
-      <div class="card"><h3>💸 Add Vacation Expense</h3><input id="amount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="note" placeholder="What did you spend on?"><select id="expenseCategory"><option>Food</option><option>Transport</option><option>Shopping</option><option>Home</option><option>Family</option><option>Car</option><option>Travel</option><option>Personal</option><option>Other</option></select><button onclick="addExpense()">Add Expense</button></div>
+      <div class="card"><h3>💸 Add Vacation Expense</h3><input id="amount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="note" placeholder="What did you spend on?"><select id="expenseCategory"><option>Food</option><option>Eating Out</option><option>Transport</option><option>Fuel</option><option>Shopping</option><option>Home</option><option>Home Improvement</option><option>Family</option><option>Gifts</option><option>Car</option><option>Travel</option><option>Medical / Pharmacy</option><option>Personal</option><option>Bank / Fees</option><option>Unexpected</option><option>Other</option></select><button onclick="addExpense()">Add Expense</button></div>
     </section>
-
-    <section id="historyTab" class="tab">
-      <div class="section-title"><div><div class="eyebrow dark">LEDGER</div><h2>📜 Vacation History</h2></div></div>
-      <div class="card">
-        <div class="filter-row"><button class="chip active" onclick="setHistoryFilter('all',this)">All</button><button class="chip" onclick="setHistoryFilter('money',this)">Money</button><button class="chip" onclick="setHistoryFilter('expense',this)">Expenses</button></div>
-        <div id="history" class="history"></div>
-      </div>
-    </section>
-
-    <section id="reports" class="tab">
-      <div class="section-title"><div><div class="eyebrow dark">INSIGHTS</div><h2>📊 Vacation Reports</h2></div></div>
-      <div class="dashboard report-dashboard">
-        <div class="box"><span>Average / day</span><h2 id="reportAvg">₹0</h2></div>
-        <div class="box"><span>Largest expense</span><h2 id="reportLargest">₹0</h2></div>
-      </div>
-      <div class="card"><h3>Category breakdown</h3><div id="categoryBreakdown" class="breakdown"></div></div>
-      <div class="card"><h3>Summary</h3><div id="vacationReport"></div></div>
-    </section>
-
-    <section id="settings" class="tab">
-      <div class="section-title"><div><div class="eyebrow dark">CONTROL</div><h2>⚙️ Settings & Backup</h2></div></div>
-      <div class="card"><h3>Backup</h3><p class="muted">Download your full vacation ledger as JSON. Existing data stays on this device.</p><button onclick="exportData()">Download Backup</button></div>
-      <div class="card danger-card"><h3>Data safety</h3><p class="muted">Use reset only if you intentionally want to erase this device's vacation data.</p><button class="danger" onclick="resetVacationData()">Reset Vacation Data</button></div>
-    </section>
+    <section id="historyTab" class="tab"><div class="section-title"><div><div class="eyebrow dark">LEDGER</div><h2>📜 Vacation History</h2></div></div><div class="card"><div class="filter-row"><button class="chip active" onclick="setHistoryFilter('all',this)">All</button><button class="chip" onclick="setHistoryFilter('money',this)">Money</button><button class="chip" onclick="setHistoryFilter('expense',this)">Expenses</button></div><div id="history" class="history"></div></div></section>
+    <section id="reports" class="tab"><div class="section-title"><div><div class="eyebrow dark">INSIGHTS</div><h2>📊 Vacation Reports</h2></div></div><div class="dashboard report-dashboard"><div class="box"><span>Average / day</span><h2 id="reportAvg">₹0</h2></div><div class="box"><span>Largest expense</span><h2 id="reportLargest">₹0</h2></div></div><div class="card"><h3>Category breakdown</h3><div id="categoryBreakdown" class="breakdown"></div></div><div class="card"><h3>Summary</h3><div id="vacationReport"></div></div></section>
+    <section id="settings" class="tab"><div class="section-title"><div><div class="eyebrow dark">CONTROL</div><h2>⚙️ Settings & Backup</h2></div></div><div class="card"><h3>Backup</h3><p class="muted">Download your full vacation ledger as JSON. Existing data stays on this device.</p><button onclick="exportData()">Download Backup</button></div><div class="card danger-card"><h3>Data safety</h3><p class="muted">Use reset only if you intentionally want to erase this device's vacation data.</p><button class="danger" onclick="resetVacationData()">Reset Vacation Data</button></div></section>
   </main>
-
-  <nav class="bottom-nav">
-    <button class="active" data-tab="home" onclick="showTab('home',this)">🏠<br>Home</button>
-    <button data-tab="add" onclick="showTab('add',this)">➕<br>Add</button>
-    <button data-tab="historyTab" onclick="showTab('historyTab',this)">📜<br>History</button>
-    <button data-tab="reports" onclick="showTab('reports',this)">📊<br>Reports</button>
-    <button data-tab="settings" onclick="showTab('settings',this)">⚙️<br>Settings</button>
-  </nav>
+  <nav class="bottom-nav"><button class="active" data-tab="home" onclick="showTab('home',this)">🏠<br>Home</button><button data-tab="add" onclick="showTab('add',this)">➕<br>Add</button><button data-tab="historyTab" onclick="showTab('historyTab',this)">📜<br>History</button><button data-tab="reports" onclick="showTab('reports',this)">📊<br>Reports</button><button data-tab="settings" onclick="showTab('settings',this)">⚙️<br>Settings</button></nav>
 </div>
-<script>
-function showTab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.remove('active'));const b=btn||document.querySelector(`.bottom-nav button[data-tab="${id}"]`);if(b)b.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
-function focusField(id){setTimeout(()=>document.getElementById(id)?.focus(),120)}
-</script>
+<script>function showTab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.remove('active'));const b=btn||document.querySelector(`.bottom-nav button[data-tab="${id}"]`);if(b)b.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}function focusField(id){setTimeout(()=>document.getElementById(id)?.focus(),120)}</script>
 <script src="app.js?v=4"></script>
 </body>
 </html>
