@@ -5,132 +5,96 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0a9f4d">
   <title>Kerala Vacation Tracker 2026</title>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <div class="app">
-  <header>
-    <div class="eyebrow">ABDULLA • 2026</div>
-    <h1>🌴 Kerala Vacation</h1>
-    <p>17 September → 20 October 2026</p>
+  <header class="hero">
+    <div class="eyebrow">ABDULLA • KERALA 2026</div>
+    <div class="hero-row">
+      <div>
+        <h1>🌴 Vacation Tracker</h1>
+        <p>17 September → 20 October 2026</p>
+      </div>
+      <div class="hero-badge" id="tripPhase">Preparing</div>
+    </div>
     <p id="tripDay" class="trip-day"></p>
+    <div class="trip-progress"><div id="tripProgressBar"></div></div>
   </header>
 
   <main>
     <section id="home" class="tab active">
       <div class="dashboard">
-        <div class="box"><span>💰 Available</span><h2 id="moneyAvailable">₹0</h2></div>
-        <div class="box"><span>💸 Spent</span><h2 id="totalSpent">₹0</h2></div>
-        <div class="box"><span>💳 Remaining</span><h2 id="remainingMoney">₹0</h2></div>
-        <div class="box"><span>📜 Transactions</span><h2 id="transactionCount">0</h2></div>
+        <div class="box"><span>💰 Added</span><h2 id="moneyAvailable">₹0</h2><small>Total vacation money</small></div>
+        <div class="box"><span>💸 Spent</span><h2 id="totalSpent">₹0</h2><small>All recorded expenses</small></div>
+        <div class="box highlight"><span>💳 Remaining</span><h2 id="remainingMoney">₹0</h2><small>Current usable balance</small></div>
+        <div class="box"><span>📜 Entries</span><h2 id="transactionCount">0</h2><small>Money + expenses</small></div>
       </div>
+
+      <div class="card quick-card">
+        <div class="card-head"><div><div class="eyebrow dark">QUICK ADD</div><h2>Record something now</h2></div><span>⚡</span></div>
+        <div class="quick-grid">
+          <button class="quick income" onclick="showTab('add');focusField('moneyAmount')">+ Add Money</button>
+          <button class="quick expense" onclick="showTab('add');focusField('amount')">− Add Expense</button>
+        </div>
+      </div>
+
       <div class="card">
-        <h2>💍 Marriage Planning</h2>
-        <div class="status-line"><span id="marriageStatusBadge" class="badge planning">Proposal Stage</span><span id="marriageBudgetSummary">₹0 / ₹3,00,000</span></div>
-        <div class="progress"><div id="marriageMiniProgress" class="progress-bar"></div></div>
-        <p class="muted">Kept completely separate from vacation spending.</p>
-        <button class="secondary" onclick="showTab('marriage')">Open Marriage Planner</button>
+        <div class="card-head"><div><div class="eyebrow dark">STATUS</div><h2>Vacation snapshot</h2></div><span id="spendStatus" class="pill good">On track</span></div>
+        <div class="snapshot-row"><span>Average daily spend</span><strong id="avgDailySpend">₹0</strong></div>
+        <div class="snapshot-row"><span>Days completed</span><strong id="daysCompleted">0</strong></div>
+        <div class="snapshot-row"><span>Estimated days left</span><strong id="daysLeft">0</strong></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><div class="eyebrow dark">RECENT</div><h2>Latest activity</h2></div><button class="text-btn" onclick="showTab('historyTab')">View all</button></div>
+        <div id="recentHistory" class="history"></div>
       </div>
     </section>
 
     <section id="add" class="tab">
-      <div class="card"><h2>Add Vacation Money</h2><input id="moneyAmount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="moneyNote" placeholder="Note"><button onclick="addMoney()">Add Money</button></div>
-      <div class="card"><h2>Add Vacation Expense</h2><input id="amount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="note" placeholder="Description"><button onclick="addExpense()">Add Expense</button></div>
+      <div class="section-title"><div><div class="eyebrow dark">VACATION LEDGER</div><h2>Add Entry</h2></div></div>
+      <div class="card"><h3>💰 Add Vacation Money</h3><input id="moneyAmount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="moneyNote" placeholder="Note / source"><button onclick="addMoney()">Add Money</button></div>
+      <div class="card"><h3>💸 Add Vacation Expense</h3><input id="amount" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="note" placeholder="What did you spend on?"><select id="expenseCategory"><option>Food</option><option>Transport</option><option>Shopping</option><option>Home</option><option>Family</option><option>Car</option><option>Travel</option><option>Personal</option><option>Other</option></select><button onclick="addExpense()">Add Expense</button></div>
     </section>
 
-    <section id="historyTab" class="tab"><div class="card"><h2>📜 Vacation History</h2><div id="history" class="history"></div></div></section>
-
-    <section id="marriage" class="tab">
-      <div class="section-title"><div><div class="eyebrow dark">SEPARATE LEDGER</div><h2>💍 Marriage Planning</h2></div><span id="marriageStatusBadge2" class="badge planning">Proposal Stage</span></div>
-      <div id="proposalNotice" class="notice">Nothing is confirmed yet. Planning mode lets you prepare without treating possible costs as committed spending.</div>
-
-      <div class="dashboard marriage-dashboard">
-        <div class="box"><span>🎯 Budget Ceiling</span><h2 id="marriageBudget">₹3,00,000</h2></div>
-        <div class="box"><span>🧾 Estimated</span><h2 id="marriageEstimated">₹0</h2></div>
-        <div class="box"><span>💸 Actual Spent</span><h2 id="marriageSpent">₹0</h2></div>
-        <div class="box"><span>💵 Funded</span><h2 id="marriageFunded">₹0</h2></div>
-        <div class="box"><span>🤝 Borrowed</span><h2 id="marriageBorrowed">₹0</h2></div>
-        <div class="box"><span>⚠️ Funding Gap</span><h2 id="marriageFundingGap">₹0</h2></div>
-      </div>
-
+    <section id="historyTab" class="tab">
+      <div class="section-title"><div><div class="eyebrow dark">LEDGER</div><h2>📜 Vacation History</h2></div></div>
       <div class="card">
-        <div class="status-line"><strong>Actual budget used</strong><strong id="marriagePercent">0%</strong></div>
-        <div class="progress large"><div id="marriageProgress" class="progress-bar"></div></div>
-        <div class="status-line small"><span>Estimated exposure</span><strong id="marriageEstimatedPercent">0%</strong></div>
-        <div class="progress"><div id="marriageEstimatedProgress" class="progress-bar estimate"></div></div>
-        <div class="status-line small"><span>Remaining within ceiling</span><strong id="marriageRemaining">₹3,00,000</strong></div>
-      </div>
-
-      <div class="card">
-        <h3>Plan Settings</h3>
-        <label>Stage</label>
-        <select id="marriageStage" onchange="setMarriageStage(this.value)">
-          <option value="proposal">Proposal Stage</option>
-          <option value="confirmed">Marriage Confirmed</option>
-        </select>
-        <label>Maximum all-in budget</label>
-        <input id="marriageBudgetInput" type="number" inputmode="decimal" value="300000">
-        <button onclick="saveMarriageBudget()">Save Budget</button>
-      </div>
-
-      <div class="card">
-        <h3>Add Planned Cost</h3>
-        <p class="muted">Use this for quotes or expected costs. It does not count as money spent.</p>
-        <div class="two-col">
-          <select id="marriagePlanCategory">
-            <option>Gold</option><option>Clothes</option><option>Nikah / Function</option><option>Documents</option><option>Travel</option><option>Gifts</option><option>Home Setup</option><option>Other</option>
-          </select>
-          <input id="marriagePlanAmount" type="number" inputmode="decimal" placeholder="Estimate ₹">
-        </div>
-        <input id="marriagePlanNote" placeholder="Item / quote / plan">
-        <button class="secondary" onclick="addMarriagePlan()">Add Planned Cost</button>
-      </div>
-
-      <div class="card">
-        <h3>Add Actual Marriage Expense</h3>
-        <div class="two-col">
-          <select id="marriageCategory">
-            <option>Gold</option><option>Clothes</option><option>Nikah / Function</option><option>Documents</option><option>Travel</option><option>Gifts</option><option>Home Setup</option><option>Other</option>
-          </select>
-          <input id="marriageExpenseAmount" type="number" inputmode="decimal" placeholder="Amount ₹">
-        </div>
-        <input id="marriageExpenseNote" placeholder="Description / note">
-        <input id="marriageExpenseDate" type="date">
-        <button onclick="addMarriageExpense()">Add Actual Expense</button>
-      </div>
-
-      <div class="card">
-        <h3>Add Funding / Borrowing</h3>
-        <select id="fundingType"><option value="cash">Own Cash / Savings</option><option value="borrowed">Borrowed Money</option><option value="family">Family Contribution</option><option value="other">Other Funding</option></select>
-        <input id="fundingAmount" type="number" inputmode="decimal" placeholder="Amount ₹">
-        <input id="fundingSource" placeholder="Source / person / account">
-        <input id="fundingNote" placeholder="Optional note or repayment terms">
-        <button onclick="addMarriageFunding()">Add Funding</button>
-      </div>
-
-      <div class="card"><h3>Planned Costs</h3><div id="marriagePlanList" class="history"></div></div>
-      <div class="card"><h3>Category Breakdown — Actual</h3><div id="marriageCategories" class="breakdown"></div></div>
-
-      <div class="card">
-        <h3>Marriage Ledger</h3>
-        <div class="filter-row"><button class="chip active" onclick="setMarriageFilter('all',this)">All</button><button class="chip" onclick="setMarriageFilter('expense',this)">Expenses</button><button class="chip" onclick="setMarriageFilter('funding',this)">Funding</button></div>
-        <div id="marriageHistory" class="history"></div>
+        <div class="filter-row"><button class="chip active" onclick="setHistoryFilter('all',this)">All</button><button class="chip" onclick="setHistoryFilter('money',this)">Money</button><button class="chip" onclick="setHistoryFilter('expense',this)">Expenses</button></div>
+        <div id="history" class="history"></div>
       </div>
     </section>
 
     <section id="reports" class="tab">
-      <div class="card"><h2>📊 Vacation Reports</h2><div id="vacationReport"></div></div>
-      <div class="card"><h2>💍 Marriage Snapshot</h2><div id="marriageReport"></div></div>
+      <div class="section-title"><div><div class="eyebrow dark">INSIGHTS</div><h2>📊 Vacation Reports</h2></div></div>
+      <div class="dashboard report-dashboard">
+        <div class="box"><span>Average / day</span><h2 id="reportAvg">₹0</h2></div>
+        <div class="box"><span>Largest expense</span><h2 id="reportLargest">₹0</h2></div>
+      </div>
+      <div class="card"><h3>Category breakdown</h3><div id="categoryBreakdown" class="breakdown"></div></div>
+      <div class="card"><h3>Summary</h3><div id="vacationReport"></div></div>
     </section>
 
-    <section id="settings" class="tab"><div class="card"><h2>⚙️ Settings & Backup</h2><p class="muted">Backup includes vacation and marriage-planning data.</p><button onclick="exportData()">Download Backup</button></div></section>
+    <section id="settings" class="tab">
+      <div class="section-title"><div><div class="eyebrow dark">CONTROL</div><h2>⚙️ Settings & Backup</h2></div></div>
+      <div class="card"><h3>Backup</h3><p class="muted">Download your full vacation ledger as JSON. Existing data stays on this device.</p><button onclick="exportData()">Download Backup</button></div>
+      <div class="card danger-card"><h3>Data safety</h3><p class="muted">Use reset only if you intentionally want to erase this device's vacation data.</p><button class="danger" onclick="resetVacationData()">Reset Vacation Data</button></div>
+    </section>
   </main>
 
   <nav class="bottom-nav">
-    <button onclick="showTab('home')">🏠<br>Home</button><button onclick="showTab('add')">➕<br>Add</button><button onclick="showTab('historyTab')">📜<br>History</button><button onclick="showTab('marriage')">💍<br>Marriage</button><button onclick="showTab('reports')">📊<br>Reports</button><button onclick="showTab('settings')">⚙️<br>Settings</button>
+    <button class="active" data-tab="home" onclick="showTab('home',this)">🏠<br>Home</button>
+    <button data-tab="add" onclick="showTab('add',this)">➕<br>Add</button>
+    <button data-tab="historyTab" onclick="showTab('historyTab',this)">📜<br>History</button>
+    <button data-tab="reports" onclick="showTab('reports',this)">📊<br>Reports</button>
+    <button data-tab="settings" onclick="showTab('settings',this)">⚙️<br>Settings</button>
   </nav>
 </div>
-<script>function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}</script>
-<script src="app.js?v=3"></script>
+<script>
+function showTab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.remove('active'));const b=btn||document.querySelector(`.bottom-nav button[data-tab="${id}"]`);if(b)b.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function focusField(id){setTimeout(()=>document.getElementById(id)?.focus(),120)}
+</script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
